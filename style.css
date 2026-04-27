@@ -64,7 +64,7 @@ a:hover { color: var(--primary-hover); }
 
 /* Header */
 .site-header {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #0d9488 0%, #155e75 100%);
   color: white;
   padding: 3.5rem 1.5rem 2.5rem;
   text-align: center;
@@ -73,7 +73,7 @@ a:hover { color: var(--primary-hover); }
 }
 
 [data-theme="dark"] .site-header {
-  background: linear-gradient(135deg, #1e3a8a 0%, #4c1d95 100%);
+  background: linear-gradient(135deg, #134e4a 0%, #083344 100%);
 }
 
 .site-header::before {
@@ -823,4 +823,72 @@ mark {
   .search-wrap { max-width: none; flex-wrap: wrap; }
   .lang-switch { order: 0; }
   .lang-btn { padding: 0.3rem 0.55rem; font-size: 0.8rem; }
+}
+
+
+/* ========== sister sites footer (cross-link to other catalogs) ========== */
+.sister-sites {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.8rem;
+  font-size: 0.88rem;
+}
+.sister-label {
+  color: var(--text-3);
+  margin-right: 0.3rem;
+}
+.sister-sites a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.32rem 0.85rem;
+  border-radius: 999px;
+  background: var(--surface-2);
+  color: var(--text-2);
+  text-decoration: none;
+  transition: all var(--transition);
+  border: 1px solid transparent;
+}
+.sister-sites a:hover {
+  background: var(--primary);
+  color: white;
+}
+.sister-sites a.current {
+  background: color-mix(in srgb, var(--primary) 14%, transparent);
+  color: var(--primary);
+  font-weight: 500;
+  border-color: color-mix(in srgb, var(--primary) 30%, transparent);
+  pointer-events: none;
+}
+
+
+/* ========== modal scroll artifact fixes ========== */
+/* 1. 提前预留滚动条宽度，避免出现/消失时整个 modal 内容跳动 */
+.modal-content {
+  scrollbar-gutter: stable;
+  /* 让 modal-content 自成 paint 层，scroll 时不影响外面的 backdrop-filter */
+  contain: layout paint;
+}
+
+/* 2. 屏蔽鼠标点击产生的 focus outline（这就是"中间那条白色描边"的来源——
+   当 close / fav 按钮被点中再失焦时，旧版本浏览器会留下短暂的 outline）
+   但保留键盘 tab 的 focus-visible 让无障碍导航仍可见 */
+.modal :focus { outline: none; }
+.modal :focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* 3. 自定义 webkit 滚动条样式，避免亮色滚动条在暗色模态里突兀 */
+.modal-content::-webkit-scrollbar { width: 8px; }
+.modal-content::-webkit-scrollbar-track { background: transparent; }
+.modal-content::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--text-3) 40%, transparent);
+  border-radius: 4px;
+}
+.modal-content::-webkit-scrollbar-thumb:hover {
+  background: color-mix(in srgb, var(--text-3) 70%, transparent);
 }

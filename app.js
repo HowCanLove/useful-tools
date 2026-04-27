@@ -7,6 +7,7 @@
   const OS_STORAGE_KEY = 'os';
   const FAVORITES_STORAGE_KEY = 'favorites';
   const SORT_STORAGE_KEY = 'sort';
+  const CATEGORY_STORAGE_KEY = 'category';
 
   const state = {
     lang: DEFAULT_LANG,
@@ -279,6 +280,7 @@
   function persistOs() {
     try { localStorage.setItem(OS_STORAGE_KEY, state.os); } catch (e) {}
   }
+function loadCategory() {    try {      const saved = localStorage.getItem(CATEGORY_STORAGE_KEY);      if (saved) state.category = saved;    } catch (e) {}  }  function persistCategory() {    try { localStorage.setItem(CATEGORY_STORAGE_KEY, state.category); } catch (e) {}  }
 
   // ---------- language detection ----------
 
@@ -417,6 +419,7 @@
     $chips.querySelectorAll('.chip').forEach(chip => {
       chip.addEventListener('click', () => {
         state.category = chip.dataset.cat;
+        persistCategory();
         $chips.querySelectorAll('.chip').forEach(c => c.classList.toggle('active', c.dataset.cat === state.category));
         render();
       });
@@ -456,11 +459,8 @@
     const fav = isFavorite(item);
     const favIcon = fav ? '★' : '☆';
     const favLabel = t(fav ? 'favorites.aria.remove' : 'favorites.aria.add');
-    const dl = downloadInfoFor(item);
-    const dlTitle = t(dl.hasDirect ? 'card.downloadTitle' : 'card.downloadFallbackTitle');
-    const downloadBtn = dl.url
-      ? `<a class="card-link card-download${dl.hasDirect ? '' : ' card-download-fallback'}" href="${escapeHtml(dl.url)}" target="_blank" rel="noopener noreferrer" data-no-modal title="${escapeHtml(dlTitle)}">${t('card.download')}</a>`
-      : '';
+    // useful-vscode: 不渲染 Install 按钮（与"View on Marketplace"指向同一页，重复无意义）
+    const downloadBtn = '';
     return `
       <article class="card" data-idx="${idx}" tabindex="0" role="button" aria-label="${escapeHtml(item.name)}">
         <button class="card-fav${fav ? ' active' : ''}" data-no-modal data-fav-idx="${idx}" aria-pressed="${fav}" aria-label="${escapeHtml(favLabel)}" title="${escapeHtml(favLabel)}">${favIcon}</button>
@@ -582,17 +582,9 @@
     $modalLink.href = item.url;
     $modalLink.textContent = `${t('card.visit')}  ·  ${hostnameFor(item.url)}`;
 
-    const dl = downloadInfoFor(item);
-    if (dl.url) {
-      $modalDownload.href = dl.url;
-      const versionTag = dl.hasDirect && dl.version ? `  ·  ${t('card.version', { v: dl.version })}` : '';
-      $modalDownload.textContent = `${t('card.download')}${versionTag}`;
-      $modalDownload.title = t(dl.hasDirect ? 'card.downloadTitle' : 'card.downloadFallbackTitle');
-      $modalDownload.classList.toggle('modal-download-fallback', !dl.hasDirect);
-      $modalDownload.hidden = false;
-    } else {
-      $modalDownload.hidden = true;
-    }
+    // useful-vscode: 弹窗里也不显示 Install 按钮（与 marketplace 链接重复）
+    // 用 style.display，因为 .modal-link-btn { display: inline-flex } 会覆盖 [hidden] 默认样式
+    $modalDownload.style.display = 'none';
 
     updateModalFav();
 
@@ -672,6 +664,7 @@
   state.os = detectInitialOs();
   loadFavorites();
   loadSort();
+  loadCategory();
   loadVersions();
   $totalCount.textContent = CATALOG.length;
   applyLangToDocument();
