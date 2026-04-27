@@ -199,6 +199,26 @@ const CATALOG = [
     url: 'https://www.remove.bg/',
     os: 'cross', category: 'disk', price: 'freemium',
   },
+  {
+    name: 'iLoveIMG — 图像全家桶',
+    desc: {
+      zh: 'iLovePDF 同公司出的图像处理网站：压缩 / 调尺寸 / 裁剪 / 转格式（JPG↔PNG↔WebP↔HEIC↔GIF）/ 加水印 / 旋转 / 抠图 / Meme 编辑器全都有。中文 UI 顺滑，免费版日常用够，文件 1 小时后自动清除。',
+      en: 'Sister site of iLovePDF for images. Compress / resize / crop / convert formats (JPG↔PNG↔WebP↔HEIC↔GIF) / watermark / rotate / remove background / meme editor — all in one place. Multilingual UI, free tier fits daily use, files auto-deleted after 1 hour.',
+      ja: 'iLovePDFと同社の画像処理サイト。圧縮/リサイズ/トリミング/形式変換（JPG↔PNG↔WebP↔HEIC↔GIF）/透かし/回転/背景除去/Meme編集が一箇所に。多言語UI、無料版で日常用途に十分、1時間後に自動削除。',
+    },
+    url: 'https://www.iloveimg.com/zh-cn',
+    os: 'cross', category: 'disk', price: 'freemium',
+  },
+  {
+    name: 'Pinetools Split Image — 图片切九宫格',
+    desc: {
+      zh: '把一张图按 N×M 切成多块——小红书/Instagram 九宫格、长图发朋友圈、拼图素材都靠它。Pinetools 全站还有上百个小工具（颜色反转 / 数字进制转 / 文本对比 / 图片转字符画 等），值得当工具书翻一翻。',
+      en: 'Split one image into an N×M grid — perfect for Instagram / Xiaohongshu mosaics, sliced long screenshots, jigsaw assets. The full Pinetools site has hundreds of similar utilities (colour invert / base converter / text diff / image-to-ASCII...) worth bookmarking.',
+      ja: '1枚の画像をN×Mグリッドに分割——Instagram/小紅書のグリッド投稿、長いスクショの分割、ジグソー素材作成に最適。Pinetools全体には他にも数百のユーティリティ（色反転/進数変換/テキスト比較/画像→ASCII等）あり。',
+    },
+    url: 'https://pinetools.com/split-image',
+    os: 'cross', category: 'disk', price: 'free',
+  },
 
   // —— PDF（云端）
   {
